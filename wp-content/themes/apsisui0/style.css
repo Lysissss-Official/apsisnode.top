@@ -1,0 +1,483 @@
+/*
+Theme Name: ApsisUI 0
+Theme URI: 你的网站地址（可选）
+Author: alphaCH
+Author URI: https://apsisnode.top
+Description: 基于 Bravada 主题深度定制的子主题，包含毛玻璃卡片、深色模式、鼠标视差等自定义效果。
+Version: 0.2.0b
+Template: bravada
+*/
+
+#nav-below .nav-previous::after, #nav-below .nav-next::after{
+    background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* 无视裁剪框 */
+#container {
+    overflow: visible !important;
+}
+#main {
+    overflow: visible !important;
+}
+
+/* ===== 文章页毛玻璃 ===== */
+body:not(.blog):not(.page-template-template-blog):not(.archive):not(.search):not(.page-template-page-navigation):not(.page-template-page-timeline) #container:not(.bravada-landing-page) .main, body.bravada-boxed-layout:not(.bravada-landing-page) #container {
+    background-color: rgba(255, 255, 255, 0.75) !important; /* 半透明白色，可调整颜色和透明度 */
+    backdrop-filter: blur(5px);          /* 模糊强度 */
+    -webkit-backdrop-filter: blur(5px);  /* Safari 兼容 */
+    box-shadow: 0 20px 80px rgba(255, 255, 255, 0.5) !important;
+}
+/* 会覆盖.content-masonry article，顺序注意 */
+article.hentry {
+    background-color: transparent !important;
+}
+
+
+/* ===== 首页瀑布流毛玻璃 ===== */
+/* 默认状态 */
+.content-masonry article {
+    background-color: rgba(255, 255, 255, 0.75) !important; /* 半透明白色，可调整颜色和透明度 */
+    backdrop-filter: blur(5px);          /* 模糊强度 */
+    -webkit-backdrop-filter: blur(5px);  /* Safari 兼容 */
+    
+    /* 悬停放大所需的过渡和初始状态 */
+    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+    will-change: transform;
+    z-index: 1;
+}
+/* 悬停状态 */
+.content-masonry article:hover {
+    transform: scale(1.05);
+    z-index: 10; /* 避免被周围卡片遮挡 */
+}
+
+
+/* ===== 时间线页面样式 ===== */
+.timeline {
+    position: relative;
+    padding: 30px 0;
+    margin: 0 auto;
+    max-width: 900px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 179px;
+    width: 2px;
+    background: #d0d0d0;
+    border-radius: 1px;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 45px;
+    display: flex;
+    align-items: flex-start;
+    min-height: 60px;
+}
+
+/* 左侧日期区域 - 增加宽度，防止换行 */
+.timeline-date {
+    width: 180px;          /* 增加宽度，容纳日期和时间 */
+    padding-right: 25px;
+    text-align: right;
+    box-sizing: border-box;
+    line-height: 1.3;
+    flex-shrink: 0;        /* 防止flex压缩 */
+}
+
+.date-large {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #162521;
+    white-space: nowrap;   /* 强制日期不换行 */
+}
+
+.time-small {
+    font-size: 0.9em;
+    color: #888;
+    white-space: nowrap;   /* 强制时间不换行 */
+}
+
+/* 右侧内容卡片 */
+.timeline-content {
+    flex: 1;
+    /*background: #ffffff;*/
+    padding: 15px 20px;
+    border-radius: 0px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-left: 25px;
+    position: relative;
+    border: 0px solid #eaeaea;
+    transition: box-shadow 0.2s;
+}
+
+.timeline-content:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* 圆点 - 位置微调 */
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 174px;
+    top: 20px; /* 与第一行文字对齐 */
+    width: 12.5px;
+    height: 12.5px;
+    border-radius: 50%;
+    background: #E9B44C;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 0 1px #d0d0d0;
+    z-index: 2;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.timeline-item:hover::before {
+    background: #0F8B8D;
+    transform: scale(1.2);
+}
+
+/* 右侧标题 */
+
+.timeline-content {
+    margin-top: -1.2em;
+}
+
+/*
+.timeline-content h2 {
+    margin: 0 0 8px 0;
+    font-size: 1.2em;
+    line-height: 1.4;
+}
+
+.timeline-content h2 a {
+    color: #162521;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.timeline-content h2 a:hover {
+    color: #E9B44C;
+}*/
+
+/* 修改者信息 */
+.timeline-author {
+    margin-top: 0.6em;
+    color: #666;
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+/* 响应式调整 */
+@media (max-width: 600px) {
+    .timeline::before {
+        display: none;
+    }
+    .timeline-item {
+        flex-direction: column;
+        margin-bottom: 40px;
+    }
+    .timeline-date {
+        width: auto;
+        text-align: left;
+        padding-right: 0;
+        margin-bottom: 25px;
+    }
+    .date-large {
+        display: inline;
+        font-size: 1.1em;
+        margin-right: 8px;
+        /*margin-bottom: 11.2em;*/
+    }
+    .time-small {
+        display: inline;
+        font-size: 0.9em;
+        color: #0F8B8D;
+        /*margin-top: -11.2em;*/
+    }
+    .timeline-content {
+        margin-left: 0;
+        width: 100%;
+    }
+    .timeline-item::before {
+        display: none;
+    }
+}
+
+
+/* ===== 深色模式 - 自动跟随系统，顺序注意 ===== */
+@media (prefers-color-scheme: dark), (prefers-color-scheme: light) {
+    /* 滚动条 */
+    /* WebKit浏览器 (Chrome, Safari, Edge) */
+    ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+        background-color: #2a2a2a; /* 滚动条轨道背景 */
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #555; /* 滑块颜色 */
+        border-radius: 6px;
+        border: 2px solid #2a2a2a; /* 边框与轨道同色，产生内边距效果 */
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #777; /* 悬停时变亮 */
+    }
+    ::-webkit-scrollbar-track {
+        background-color: #2a2a2a;
+    }
+    /* Firefox */
+    * {
+        scrollbar-color: #555 #2a2a2a; /* 滑块颜色 轨道颜色 */
+        scrollbar-width: thin;
+    }
+    
+    
+    /* 全局背景和文字 */
+    body,
+    #site-wrapper,
+    .cryout {
+        /*background-color: #1a1a1a !important;
+        color: #e0e0e0 !important;*/
+    }
+
+    /* --- 链接颜色 --- */
+    /* 默认状态 */
+    a,
+    .widget-area a,
+    .entry-meta span a,
+    .comments-link a {
+        /*color: #e0e0e0 !important;*/
+    }
+    /* 悬停状态 */
+    a:hover,
+    .widget-area a:hover,
+    .entry-meta span a:hover,
+    .comments-link a:hover {
+        color: #00ffff !important;
+    }
+    
+    /* --- 输入框颜色 --- */
+    /* 默认状态 */
+    select, input[type], textarea {
+        color: #e0e0e0 !important;
+        background-color: #333 !important;
+    }
+    /* 悬停状态 */
+    select:hover, input[type]:hover, textarea:hover {
+        color: #e0e0e0 !important;
+        background-color: #444 !important;
+    }
+    
+    /* --- 输入框颜色特判1 --- */
+    /* 默认状态 */
+    input[type="submit"]{
+        color: #e0e0e0 !important;
+        background-color: #e9b44c !important;
+    }
+    /* 悬停状态 */
+    input[type="submit"]:hover{
+        color: #e0e0e0 !important;
+        background-color: #0f8b8d !important;
+    }
+
+    /* 文章卡片 - 覆盖你之前的毛玻璃背景 */
+    .content-masonry article {
+        background-color: rgba(40, 40, 40, 0.75) !important; /* 深色半透明，保留毛玻璃感 */
+        border-color: #444 !important;
+        color: #e0e0e0 !important;
+    }
+
+    /* 卡片内的标题和文字 */
+    .entry-title a,
+    .entry-meta,
+    .entry-summary p {
+        color: #e0e0e0 !important;
+    }
+
+    /* 如果你之前为卡片添加了阴影，可以调暗 */
+    .content-masonry article {
+        box-shadow: 0 15px 60px rgba(255, 255, 255, 0.4) !important;
+    }
+
+    /* 头部背景遮罩（如果你用了那个模糊层） */
+    .header-image::after {
+        /* 例如让模糊层更暗一点，但保持模糊效果 */
+        background: rgba(0, 0, 0, 0.2) !important; /* 如果是径向渐变，也可调整颜色 */
+    }
+
+    /* 标题文字 */
+    #header-page-title .entry-title,
+    #site-title a,
+    #site-description {
+        color: #f0f0f0 !important;
+    }
+
+    /* 侧边栏小工具 */
+    /*.widget-area {
+        background-color: #222 !important;
+        color: #ccc !important;
+    }*/
+
+    /* 页脚 */
+    #colophon, #footer {
+        background-color: #111 !important;
+        color: #aaa !important;
+    }
+
+    /* 文章页背景色 */
+ 
+    body:not(.blog):not(.page-template-template-blog):not(.archive):not(.search):not(.page-template-page-navigation):not(.page-template-page-timeline) #container:not(.bravada-landing-page) .main, body.bravada-boxed-layout:not(.bravada-landing-page) #container {
+        background-color: rgba(40, 40, 40, 0.75) !important;
+    }
+    
+    /* 文章主体内容 */
+    /*.single*/ .entry-content,
+    /*.single*/ .entry-content p,
+    /*.single*/ .entry-content h1,
+    /*.single*/ .entry-content h2,
+    /*.single*/ .entry-content h3,
+    /*.single*/ .entry-content h4,
+    /*.single*/ .entry-content h5,
+    /*.single*/ .entry-content h6,
+    /*.single*/ .entry-content li,
+    /*.single*/ .entry-content blockquote {
+        color: #e0e0e0 !important;
+    }
+
+    /* 文章标题 */
+    /*.single*/ .entry-title {
+        color: #ffffff !important;
+    }
+
+    /* 文章元信息（日期、作者、分类等） */
+    /*.single*/ .entry-meta,
+    /*.single*/ .entry-meta a {
+        color: #aaaaaa !important;
+    }
+
+    /* 文章标签和底部元信息 */
+    /*.single*/ .entry-utility,
+    /*.single*/ .entry-utility a {
+        color: #aaaaaa !important;
+    }
+
+    /* 文章内的链接 */
+    /*.single*/ .entry-content a {
+        color: #88b5ff !important;
+    }
+
+    /* 代码块（如果有） */
+    .wp-block-kevinbatdorf-code-block-pro > span:first-child { /* 语言标签 */
+        background-color: #333 !important;
+        color: #ccc !important;
+    }
+    .wp-block-kevinbatdorf-code-block-pro .code-block-pro-copy-button {
+        color: #aaa !important;
+    }
+    .wp-block-kevinbatdorf-code-block-pro pre.shiki {
+        background-color: #2d2d2d !important;
+    }
+    .wp-block-kevinbatdorf-code-block-pro pre.shiki code {
+        color: #f0f0f0 !important;
+    }
+    
+    /*.single*/ pre,
+    /*.single*/ code {
+        background-color: #2d2d2d !important;
+        color: #f0f0f0 !important;
+        border-color: #444 !important;
+    }
+
+    /* 引用块 */
+    /*.single*/ blockquote {
+        background-color: #2a2a2a !important;
+        border-left-color: #555 !important;
+    }
+
+
+
+    /* 评论区 */
+    /*.single*/ .comment-author,
+    /*.single*/ .comment-metadata a {
+        color: #ddd !important;
+    }
+    
+    .comment-area {
+        border-color: #666 !important;
+    }
+    
+    .comment-body {
+        color: #e0e0e0 !important;
+    }
+    /*.single*/ .reply a {
+        color: #88b5ff !important;
+    }
+
+    /* 上一篇/下一篇导航 */
+    /*.single*/ #nav-below {
+        background-color: #222 !important;
+        border-color: #444 !important;
+    }
+    /*.single*/ #nav-below a {
+        color: #e0e0e0 !important;
+    }
+}
+
+/* 首页下部阴影 */
+#header-image-main {
+    overflow: visible !important;
+}
+#header-image-main-inside {
+    overflow: visible !important;
+}
+#header-page-title {
+    box-shadow: 0 25px 36px -8px rgba(255, 255, 255, 0.6);
+}
+
+/* 菜单颜色 */
+#mobile-menu {
+    background-color: #222 !important;
+}
+
+/* 给背景图片容器添加伪元素，实现四周渐变淡出 */
+.header-image {
+    position: relative; /* 为伪元素提供定位参考 */
+}
+.header-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* 让鼠标事件穿透，不影响点击 */
+    background: radial-gradient(ellipse, transparent 60%, rgba(0,0,0,0.8) 95%);
+    /* 调整颜色和透明度：transparent 区域越大，模糊范围越小；黑色半透明增加边缘暗角效果 */
+    z-index: 2; /* 确保覆盖在背景之上，但低于文字 */
+}
+.header-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    backdrop-filter: blur(10px);  /* 模糊强度 */
+    -webkit-backdrop-filter: blur(10px);
+    -webkit-mask: 
+        linear-gradient(to bottom, white, transparent) top / 100% 5% no-repeat,
+        linear-gradient(to top, white, transparent) bottom / 100% 5% no-repeat,
+        linear-gradient(to right, white, transparent) left / 5% 100% no-repeat,
+        linear-gradient(to left, white, transparent) right / 5% 100% no-repeat;
+    mask: 
+        linear-gradient(to bottom, white, transparent) top / 100% 5% no-repeat,
+        linear-gradient(to top, white, transparent) bottom / 100% 5% no-repeat,
+        linear-gradient(to right, white, transparent) left / 5% 100% no-repeat,
+        linear-gradient(to left, white, transparent) right / 5% 100% no-repeat;
+    /* 径向遮罩：中心透明（不显示模糊），边缘黑色（显示模糊） */
+    z-index: 1;
+}
